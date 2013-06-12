@@ -12,12 +12,46 @@ using namespace util;
 
 namespace util { namespace serialize { namespace binary {
 
+    template <typename T, EnableIfFundamental            <T>...> T load(std::ifstream&);
+    template <typename T, EnableIfAssociativeContainer   <T>...> T load(std::ifstream&);
+    template <typename T, EnableIfNonAssociativeContainer<T>...> T load(std::ifstream&);
+    template <typename T, EnableIfArray                  <T>...> T load(std::ifstream&);
+    // template <typename T, EnableIfString                 <T>...> T load(std::ifstream&, T&);
+    template<class K, class V>                      std::pair<K,V> load(std::ifstream&);
+
     template <typename T, EnableIfFundamental            <T>...> T load(std::ifstream&, T&);
     template <typename T, EnableIfAssociativeContainer   <T>...> T load(std::ifstream&, T&);
     template <typename T, EnableIfNonAssociativeContainer<T>...> T load(std::ifstream&, T&);
     template <typename T, EnableIfArray                  <T>...> T load(std::ifstream&, T&);
     // template <typename T, EnableIfString                 <T>...> T load(std::ifstream&, T&);
     template<class K, class V>                      std::pair<K,V> load(std::ifstream&, std::pair<K,V>&);
+
+
+    template <typename T, EnableIfFundamental            <T>...> T load(std::ifstream& in) {
+        T t;
+        return load(in, t);
+    }
+    template <typename T, EnableIfAssociativeContainer   <T>...> T load(std::ifstream& in) {
+        T t;
+        return load(in, t);
+    }
+    template <typename T, EnableIfNonAssociativeContainer<T>...> T load(std::ifstream& in) {
+        T t;
+        return load(in, t);
+    }
+    template <typename T, EnableIfArray                  <T>...> T load(std::ifstream& in) {
+        T t;
+        return load(in, t);
+    }
+    // template <typename T, EnableIfString                 <T>...> T load(std::ifstream&, T& in) {
+    //     T t;
+    //     return load(in, t);
+    // }
+    template<class K, class V>                      std::pair<K,V> load(std::ifstream& in) {
+        std::pair<K,V> t;
+        return load(in, t);
+    }
+
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     /*                  L  O  A  D                                               */

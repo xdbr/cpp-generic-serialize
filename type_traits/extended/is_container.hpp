@@ -5,21 +5,18 @@
 
 namespace util {
 
-// most parts stolen from:
+// many parts stolen from:
 // http://flamingdangerzone.com/
-
-// template <bool If, typename Then, typename Else>
-// using Conditional = typename std::conditional<If, Then, Else>::type;
 
 template <typename If, typename Then, typename Else>
 using Conditional = typename std::conditional<If::value, Then, Else>::type;
 
 template <bool B, typename...>
 struct dependent_bool_type : std::integral_constant<bool, B> {};
+
 // and an alias, just for kicks :)
 template <bool B, typename... T>
 using Bool = typename dependent_bool_type<B, T...>::type;
-
 
 // Meta-logical negation
 template <typename T>
@@ -98,6 +95,10 @@ namespace detail { enum class enabler {}; }
 
 template <typename... Condition>
 using EnableIf = typename std::enable_if<all<Condition...>::value, detail::enabler>::type;
+
+
+
+// end "stolen" parts from flamingdangerzone.com
 
 template<typename A, A, A>              struct is_of_type  { typedef void type; };
 template<typename A, A, A, typename B>  struct is_of_type2 { typedef void type; };
