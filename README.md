@@ -11,32 +11,18 @@ Header-only library to ease binary serialization.
 Examples
 --------
 
-    #include <cassert>
-    #include <iostream>
-    #include <fstream>
-    #include <string>
-    #include <set>
-    #include <map>
+Essentially, these lines should sum up the purpose of this library:
 
-    #include "binary.hpp"
-
-    int main() {
-
-        std::ofstream   map1_file_o("map1_file.bin", std::ios::out | std::ios::binary);
-        std::map<int, std::string>  map1_load,
-                                    map1_save = { {1, "foo"}, {2, "bar"}};
-
-        util::serialize::binary::save(map1_file_o, map1_save);
-        map1_file_o.close();
+    // open ofstream as binary ...
+    // save arbitraty container or fundamental type to it:
+    list<vector<map< string, unsigned >>> foobar;
+    save(ofstream_binary, foobar);
     
-        std::ifstream   map1_file_i("map1_file.bin", std::ios::in | std::ios::binary);
-        util::serialize::binary::load(map1_file_i, map1_load);
+    // a little later... load the container back in:
     
-        assert(map1_save == map1_load);
-    
-        std::cout << "All tests run successful." << std::endl;
-        return 0;
-    }
+    auto barbaz = load< list<vector<map< string, unsigned >>> >( ifstream_binary );
+
+See the test cases for more examples.
 
 Usage
 -----
