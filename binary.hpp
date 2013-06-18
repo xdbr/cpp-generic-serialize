@@ -2,6 +2,7 @@
 
 #include "save.hpp"
 #include "load.hpp"
+#include "skip.hpp"
 
 #include <string>
 

@@ -14,7 +14,9 @@
 #include <list>
 #include <utility>
 
+#include "skip.hpp"
 #include "binary.hpp"
+
 
 namespace usb = util::serialize::binary;
 
@@ -72,6 +74,23 @@ int main() {
     test2("list_1.bin",      std::list<unsigned int>                     { 1, 2, 3, 4, 5, 6, 7, 8, 9 }                           );
     test2("list_map_1.bin",  std::list<std::map<std::string, unsigned>>  {{{"foo", 1}, {"bar", 2}}, {{"baz", 1}, {"quux", 2}}}   );
     // test("pair.bin",        pair                                     );
+    
+    /* save */
+    std::ofstream   os("skip.bin", std::ios::out | std::ios::binary);
+    usb::save(os, s);
+    auto pos_os = os.tellp();
+    os.close();
+    
+    /* skip */
+    std::ifstream   is("skip.bin", std::ios::in | std::ios::binary);
+
+    usb::skip<decltype(s)>(is);
+    // usb::skip<std::string>(is); // WARN: no worky-worky! why?
+    auto pos_is = is.tellg();
+
+    /* assert */
+    assert(pos_os == pos_is);
+    assert(is.good());
     
     std::cout << "All tests run successful." << std::endl;
     return 0;
