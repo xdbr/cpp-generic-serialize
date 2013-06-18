@@ -6,10 +6,7 @@
 
 #include "type_traits/extended/is_container.hpp"
 
-// #include <string>
-// #include <utility> // std::pair
-#include <fstream> // read
-
+#include <fstream>
 
 namespace util { namespace serialize { namespace binary {
     template <typename T> void skip(std::ifstream & is);

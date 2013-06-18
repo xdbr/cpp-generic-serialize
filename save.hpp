@@ -27,19 +27,13 @@ namespace util { namespace serialize { namespace binary {
     template <typename T, EnableIfFundamental<T>...>
     T
     save(std::ofstream & os, T t) {
-// _vniMsg("-- save fundamental, size = " << sizeof(t) << " / t = '" << t << "' / tellp = " << os.tellp());
-        // _vniVar(os.tellp());
-        // _vniVar(t);
         os.write(reinterpret_cast<const char*>(&t), sizeof(t));
-        // _vniVar(os.tellp());
         return t;
     }
 
     template <typename T, EnableIfContainer<T>...>
     T
     save(std::ofstream & os, T t) {
-// _vniMsg("-- save Container / tellp = " << os.tellp());
-
         unsigned size = t.size();
         save(os, size);
 
@@ -52,32 +46,27 @@ namespace util { namespace serialize { namespace binary {
     template <typename T, EnableIfArray<T>...>
     T
     save(std::ofstream & os, T t) {
-// _vniMsg("-- save array / tellp = " << os.tellp());
-
         unsigned size = t.size();
         save(os, size);
 
         return t;
     }
 
-//     template <typename T, EnableIfString<T>...>
-//     T
-//     save(std::ofstream & os, T t) {
-//         size_t       size = t.size() + 1;
-// _vniVar(t);
-//         // os.write(reinterpret_cast<const char*>(&size), sizeof(size));
-//         save(os, size);
-//         const char * data = t.data();
-// _vniVar(t.data());
-//         os.write(reinterpret_cast<const char*>(&data), (unsigned)size);
-// 
-//         return t;
-//     }
+    // template <typename T, EnableIfString<T>...>
+    // T
+    // save(std::ofstream & os, T t) {
+    //     size_t       size = t.size() + 1;
+    //     // os.write(reinterpret_cast<const char*>(&size), sizeof(size));
+    //     save(os, size);
+    //     const char * data = t.data();
+    //     os.write(reinterpret_cast<const char*>(&data), (unsigned)size);
+    //
+    //     return t;
+    // }
 
     template<class K, class V>
     std::pair<K,V>
     save(std::ofstream & os, std::pair<K,V> t) {
-// _vniMsg("-- save pair / tellp = " << os.tellp());
 
         save(os, t.first);
         save(os, t.second);

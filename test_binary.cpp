@@ -56,11 +56,10 @@ void test2(std::string fn, const T & t) {
 }
 
 int main() {
-    std::list<int>  l = {1,2,3};
-    // int l = 5;
-    int s = 8;
-    // std::string     s("foobar");
-    auto pair = std::make_pair(s, l);
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    /*                  T E S T   S A V E / L O A D                              */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
     test1("int.bin",         int                                         { -5 }                                                  );
     test1("string.bin",      std::string                                 {"foobarbaz"}                                           );
     test1("map_1.bin",       std::map<std::string, unsigned>             {{"foo", 1}, {"bar", 2}}                                );
@@ -74,7 +73,14 @@ int main() {
     test2("list_1.bin",      std::list<unsigned int>                     { 1, 2, 3, 4, 5, 6, 7, 8, 9 }                           );
     test2("list_map_1.bin",  std::list<std::map<std::string, unsigned>>  {{{"foo", 1}, {"bar", 2}}, {{"baz", 1}, {"quux", 2}}}   );
     // test("pair.bin",        pair                                     );
+
+
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    /*                  T E S T   S K I P                                        */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     
+    std::string s("foobar");
     /* save */
     std::ofstream   os("skip.bin", std::ios::out | std::ios::binary);
     usb::save(os, s);
