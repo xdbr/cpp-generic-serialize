@@ -12,45 +12,67 @@
 #include <set>
 #include <map>
 #include <list>
+#include <utility>
 
 #include "binary.hpp"
 
+namespace usb = util::serialize::binary;
+
+template<typename T>
+void test1(std::string fn, const T & t) {
+
+    /* save */
+    std::ofstream   os(fn, std::ios::out | std::ios::binary);
+    usb::save(os, t);
+    os.close();
+    
+    /* load */
+    T t_in;
+    std::ifstream   is(fn, std::ios::in | std::ios::binary);
+    usb::load(is, t_in);
+    is.close();
+
+    /* assert */
+    assert(t_in == t);
+}
+
+template<typename T>
+void test2(std::string fn, const T & t) {
+
+    /* save */
+    std::ofstream   os(fn, std::ios::out | std::ios::binary);
+    usb::save(os, t);
+    os.close();
+    
+    /* load */
+    std::ifstream   is(fn, std::ios::in | std::ios::binary);
+    auto t_in = usb::load<T>(is);
+    is.close();
+
+    /* assert */
+    assert(t_in == t);
+}
+
 int main() {
-
-    namespace usb = util::serialize::binary;
-
-    /* * *  Test 1  * * */
-    std::ofstream   map1_file_o("map1_file.bin", std::ios::out | std::ios::binary);
-    std::map<int, std::string>  map1_load,
-                                map1_save = { {1, "foo"}, {2, "bar"}};
-
-    util::serialize::binary::save(map1_file_o, map1_save);
-    map1_file_o.close();
+    std::list<int>  l = {1,2,3};
+    // int l = 5;
+    int s = 8;
+    // std::string     s("foobar");
+    auto pair = std::make_pair(s, l);
+    test1("int.bin",         int                                         { -5 }                                                  );
+    test1("string.bin",      std::string                                 {"foobarbaz"}                                           );
+    test1("map_1.bin",       std::map<std::string, unsigned>             {{"foo", 1}, {"bar", 2}}                                );
+    test1("list_1.bin",      std::list<unsigned int>                     { 1, 2, 3, 4, 5, 6, 7, 8, 9 }                           );
+    test1("list_map_1.bin",  std::list<std::map<std::string, unsigned>>  {{{"foo", 1}, {"bar", 2}}, {{"baz", 1}, {"quux", 2}}}   );
+    // test("pair.bin",        pair                                     );
     
-    std::ifstream   map1_file_i("map1_file.bin", std::ios::in | std::ios::binary);
-    util::serialize::binary::load(map1_file_i, map1_load);
+    test2("int.bin",         int                                         { -5 }                                                  );
+    test2("string.bin",      std::string                                 {"foobarbaz"}                                           );
+    test2("map_1.bin",       std::map<std::string, unsigned>             {{"foo", 1}, {"bar", 2}}                                );
+    test2("list_1.bin",      std::list<unsigned int>                     { 1, 2, 3, 4, 5, 6, 7, 8, 9 }                           );
+    test2("list_map_1.bin",  std::list<std::map<std::string, unsigned>>  {{{"foo", 1}, {"bar", 2}}, {{"baz", 1}, {"quux", 2}}}   );
+    // test("pair.bin",        pair                                     );
     
-    assert(map1_save == map1_load);
-    
-    
-    /* * *  Test 2  * * */
-    std::list<unsigned int> list1_load,
-                            list1_save = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-
-    std::ofstream           list1_file_o("list1_file.bin", std::ios::out | std::ios::binary);
-
-    usb::save(list1_file_o, list1_save);
-
-    list1_file_o.close();
-
-    
-    std::ifstream           list1_file_i("list1_file.bin", std::ios::in | std::ios::binary);
-
-    auto list1_l = usb::load< std::list<unsigned int> >(list1_file_i);
-    
-    assert(list1_l == list1_save);
-    
-
     std::cout << "All tests run successful." << std::endl;
     return 0;
 }
