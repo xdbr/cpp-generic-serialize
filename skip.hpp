@@ -9,8 +9,8 @@
 #include <fstream>
 
 namespace util { namespace serialize { namespace binary {
-    template <typename T> void skip(std::ifstream & is);
-    template <typename T> void skip(std::ifstream & is) { load<T>(is); }
+    // template <typename T> void skip(std::ifstream & is);
+    // template <typename T> void skip(std::ifstream & is) { util::serialize::binary::load<T>(is); }
 
 } } } /* namespace util::serialize::binary */
 
