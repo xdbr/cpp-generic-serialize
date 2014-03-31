@@ -90,8 +90,8 @@ int main() {
     /* skip */
     std::ifstream   is("skip.bin", std::ios::in | std::ios::binary);
 
-    usb::skip<decltype(s)>(is);
-    // usb::skip<std::string>(is); // WARN: no worky-worky! why?
+    // usb::skip<decltype(s)>(is);
+    usb::skip<std::string>(is);
     auto pos_is = is.tellg();
 
     /* assert */
