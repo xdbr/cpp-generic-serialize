@@ -7,6 +7,7 @@ OBJECTS  = SOURCES.map { |file| file.ext('.o') }
 EXE      = SOURCES.map { |file| file.ext('.test') }
 
 CLEAN.include(OBJECTS, EXE)
+CLOBBER.include(FileList['*.bin'])
 
 task :default => :test
 
