@@ -12,10 +12,10 @@
 namespace util { namespace serialize { namespace binary {
 
     // forward declarations
-    template <typename T, EnableIfFundamental<T>...> T save(std::ofstream&, T);
-    template <typename T, EnableIfContainer  <T>...> T save(std::ofstream&, T);
-    template <typename T, EnableIfArray      <T>...> T save(std::ofstream&, T);
-    // template <typename T, EnableIfString     <T>...> T save(std::ofstream&, T);
+    template <typename T, EnableIfFundamental<T> = detail::dummy> T save(std::ofstream&, T);
+    template <typename T, EnableIfContainer  <T> = detail::dummy> T save(std::ofstream&, T);
+    template <typename T, EnableIfArray      <T> = detail::dummy> T save(std::ofstream&, T);
+    // template <typename T, EnableIfString     <T> = detail::dummy> T save(std::ofstream&, T);
     template<class K, class V>          std::pair<K,V> save(std::ofstream&, std::pair<K,V>);
 
 
@@ -24,14 +24,14 @@ namespace util { namespace serialize { namespace binary {
     /*                  S  A  V  E                                               */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    template <typename T, EnableIfFundamental<T>...>
+    template <typename T, EnableIfFundamental<T>>
     T
     save(std::ofstream & os, T t) {
         os.write(reinterpret_cast<const char*>(&t), sizeof(t));
         return t;
     }
 
-    template <typename T, EnableIfContainer<T>...>
+    template <typename T, EnableIfContainer<T>>
     T
     save(std::ofstream & os, T t) {
         unsigned size = t.size();
@@ -43,7 +43,7 @@ namespace util { namespace serialize { namespace binary {
         return t;
     }
 
-    template <typename T, EnableIfArray<T>...>
+    template <typename T, EnableIfArray<T>>
     T
     save(std::ofstream & os, T t) {
         unsigned size = t.size();
@@ -52,7 +52,7 @@ namespace util { namespace serialize { namespace binary {
         return t;
     }
 
-    // template <typename T, EnableIfString<T>...>
+    // template <typename T, EnableIfString<T>>
     // T
     // save(std::ofstream & os, T t) {
     //     size_t       size = t.size() + 1;

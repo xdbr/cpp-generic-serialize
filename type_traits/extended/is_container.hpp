@@ -89,9 +89,10 @@ using RemoveCv = Invoke<remove_cv<T>>;
 template <typename T>
 using Unqualified = RemoveCv<RemoveReference<T>>;
 
-
-
-namespace detail { enum class enabler {}; }
+namespace detail {
+enum class enabler { DUMMY };
+constexpr const enabler dummy = enabler::DUMMY;
+}
 
 template <typename... Condition>
 using EnableIf = typename std::enable_if<all<Condition...>::value, detail::enabler>::type;

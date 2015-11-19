@@ -12,46 +12,46 @@ using namespace util;
 
 namespace util { namespace serialize { namespace binary {
 
- // template <typename T, EnableIfString                 <T>...> T load(std::ifstream&, T&);
-    template <typename T, EnableIfFundamental            <T>...> T load(std::ifstream&);
-    template <typename T, EnableIfAssociativeContainer   <T>...> T load(std::ifstream&);
-    template <typename T, EnableIfNonAssociativeContainer<T>...> T load(std::ifstream&);
-    template <typename T, EnableIfArray                  <T>...> T load(std::ifstream&);
+ // template <typename T, EnableIfString                 <T> = detail::dummy> T load(std::ifstream&, T&);
+    template <typename T, EnableIfFundamental            <T> = detail::dummy> T load(std::ifstream&);
+    template <typename T, EnableIfAssociativeContainer   <T> = detail::dummy> T load(std::ifstream&);
+    template <typename T, EnableIfNonAssociativeContainer<T> = detail::dummy> T load(std::ifstream&);
+    template <typename T, EnableIfArray                  <T> = detail::dummy> T load(std::ifstream&);
     template<class K, class V>                      std::pair<K,V> load(std::ifstream&);
 
- // template <typename T, EnableIfString                 <T>...> T load(std::ifstream&, T&);
-    template <typename T, EnableIfFundamental            <T>...> T load(std::ifstream&, T&);
-    template <typename T, EnableIfAssociativeContainer   <T>...> T load(std::ifstream&, T&);
-    template <typename T, EnableIfNonAssociativeContainer<T>...> T load(std::ifstream&, T&);
-    template <typename T, EnableIfArray                  <T>...> T load(std::ifstream&, T&);
+ // template <typename T, EnableIfString                 <T> = detail::dummy> T load(std::ifstream&, T&);
+    template <typename T, EnableIfFundamental            <T> = detail::dummy> T load(std::ifstream&, T&);
+    template <typename T, EnableIfAssociativeContainer   <T> = detail::dummy> T load(std::ifstream&, T&);
+    template <typename T, EnableIfNonAssociativeContainer<T> = detail::dummy> T load(std::ifstream&, T&);
+    template <typename T, EnableIfArray                  <T> = detail::dummy> T load(std::ifstream&, T&);
     template<class K, class V>                      std::pair<K,V> load(std::ifstream&, std::pair<K,V>&);
 
 
-    template <typename T, EnableIfFundamental <T>...>
+    template <typename T, EnableIfFundamental <T>>
     T load(std::ifstream& in) {
         T t;
         return load(in, t);
     }
-    
-    template <typename T, EnableIfAssociativeContainer <T>...>
+
+    template <typename T, EnableIfAssociativeContainer <T>>
     T load(std::ifstream& in) {
         T t;
         return load(in, t);
     }
-    
-    template <typename T, EnableIfNonAssociativeContainer<T>...>
+
+    template <typename T, EnableIfNonAssociativeContainer<T>>
     T load(std::ifstream& in) {
         T t;
         return load(in, t);
     }
-    
-    template <typename T, EnableIfArray <T>...>
+
+    template <typename T, EnableIfArray <T>>
     T load(std::ifstream& in) {
         T t;
         return load(in, t);
     }
-    
-    // template <typename T, EnableIfString <T>...>
+
+    // template <typename T, EnableIfString <T>>
     // T load(std::ifstream&, T& in) {
     //     T t;
     //     return load(in, t);
@@ -67,7 +67,7 @@ namespace util { namespace serialize { namespace binary {
     /*                  L  O  A  D                                               */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    template <typename T, EnableIfFundamental<T>...>
+    template <typename T, EnableIfFundamental<T>>
     T
     load(std::ifstream & is, T & t) {
         is.read(reinterpret_cast<char*>(&t), /*static_cast<(std::streamsize)*/sizeof(t) );
@@ -75,7 +75,7 @@ namespace util { namespace serialize { namespace binary {
     }
 
 
-    template <typename T, EnableIfAssociativeContainer<T>...>
+    template <typename T, EnableIfAssociativeContainer<T>>
     T
     load(std::ifstream & is, T & t) {
         unsigned size = 0;
@@ -96,7 +96,7 @@ namespace util { namespace serialize { namespace binary {
     }
 
 
-    template <typename T, EnableIfNonAssociativeContainer<T>...>
+    template <typename T, EnableIfNonAssociativeContainer<T>>
     T
     load(std::ifstream & is, T & t) {
         unsigned size = 0;
@@ -112,7 +112,7 @@ namespace util { namespace serialize { namespace binary {
         return t;
     }
 
-    template <typename T, EnableIfArray<T>...>
+    template <typename T, EnableIfArray<T>>
     T
     load(std::ifstream & is, T & t) {
         is.read(reinterpret_cast<char*>(&t), /*static_cast<(std::streamsize)*/sizeof(t) );
@@ -120,7 +120,7 @@ namespace util { namespace serialize { namespace binary {
     }
 
 
-    // template <typename T, EnableIfString<T>...>
+    // template <typename T, EnableIfString<T>>
     // T
     // load(std::ifstream & is, T & t) {
     //     size_t  size = 0;
