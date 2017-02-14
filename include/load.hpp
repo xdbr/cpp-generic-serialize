@@ -81,11 +81,8 @@ namespace util::serialize::binary {
 
     std::insert_iterator<T> insert_it(t, t.begin()); 
 
-    for (unsigned i = 0; i < size; i++) {
-      // typename std::decay<typename T::value_type>::type e;
-      typename std::decay<typename T::value_type>::type e;
-      *insert_it++ = load(is, e);
-    }
+    for (unsigned i = 0; i < size; i++)
+      *insert_it++ = load<typename T::value_type>(is);
 
     return t;
   }
