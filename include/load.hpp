@@ -44,10 +44,10 @@ namespace util::serialize::binary {
 
   template<Pair T>
   T load(std::ifstream & is, T & t) {
-    auto key = load<typename std::decay<typename T::first_type>::type>(is, t.first);
-    auto val = load<typename T::second_type>(is, t.second);
-    
-
+    using key_type   = typename std::decay<typename T::first_type>::type;
+    using value_type = typename T::second_type;
+    auto key = load<key_type>(is);
+    auto val = load<value_type>(is);
     return std::make_pair(key, val);
   }
 

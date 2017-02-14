@@ -6,7 +6,7 @@ default: test clean
 
 test: test_binary
 	./$<
-	
+
 test_binary: test_binary.cpp
 
 test_binary.cpp: save.hpp load.hpp concepts.hpp

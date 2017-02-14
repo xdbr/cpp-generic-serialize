@@ -10,12 +10,12 @@ namespace util::serialize::binary {
   template<Iterable T>    void save(std::ofstream&, T);
   template<Fundamental T> void save(std::ofstream&, T);
 
-  template<Pair T> 
+  template<Pair T>
   void save(std::ofstream & os, T t) {
     save(os, t.first);
     save(os, t.second);
   }
-  
+
   template<Array T>
   void save(std::ofstream & os, T t) {
     unsigned size = t.size();
@@ -30,7 +30,7 @@ namespace util::serialize::binary {
     for (const auto& it: t) save(os, it);
   }
 
-  template<Fundamental T> 
+  template<Fundamental T>
   void save(std::ofstream & os, T t) {
     os.write(reinterpret_cast<const char*>(&t), sizeof(t));
   }
