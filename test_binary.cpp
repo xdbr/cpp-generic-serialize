@@ -15,6 +15,7 @@
 #include <utility>
 
 #include "skip.hpp"
+// #include "test_binary.h"
 #include "binary.hpp"
 
 
@@ -74,8 +75,6 @@ int main() {
     test2("list_map_1.bin",  std::list<std::map<std::string, unsigned>>  {{{"foo", 1}, {"bar", 2}}, {{"baz", 1}, {"quux", 2}}}   );
     // test("pair.bin",        pair                                     );
 
-
-
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     /*                  T E S T   S K I P                                        */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -97,7 +96,7 @@ int main() {
     /* assert */
     assert(pos_os == pos_is);
     assert(is.good());
-    
+
     std::cout << "All tests run successful." << std::endl;
     return 0;
 }
