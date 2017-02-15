@@ -18,13 +18,13 @@ namespace util::serialize::binary {
 
   template<Array T>
   void save(std::ofstream & os, T t) {
-    unsigned size = t.size();
+    std::size_t size = t.size();
     save(os, size);
   }
 
   template<Iterable T>
   void save(std::ofstream & os, T t) {
-    unsigned size = t.size();
+    std::size_t size = t.size();
     save(os, size);
 
     for (const auto& it: t) save(os, it);

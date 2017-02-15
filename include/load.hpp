@@ -58,12 +58,12 @@ namespace util::serialize::binary {
     using key_type    = typename std::decay<typename T::key_type>::type;
     using mapped_type = typename std::decay<typename T::mapped_type>::type;
 
-    unsigned size = 0;
+    std::size_t size = 0;
     load(is, size);
 
     std::insert_iterator< T > insert_it(t, t.begin());
 
-    for (unsigned i = 0; i < size; i++) {
+    for (std::size_t i = 0; i < size; i++) {
       auto k = load<key_type>(is);
       auto v = load<mapped_type>(is);
 
@@ -76,12 +76,12 @@ namespace util::serialize::binary {
   template<typename T>
   requires Iterable<T>() && !AssociativeContainer<T>()
   T load(std::ifstream & is, T & t) {
-    unsigned size = 0;
+    std::size_t size = 0;
     load(is, size);
 
     std::insert_iterator<T> insert_it(t, t.begin()); 
 
-    for (unsigned i = 0; i < size; i++)
+    for (std::size_t i = 0; i < size; i++)
       *insert_it++ = load<typename T::value_type>(is);
 
     return t;
