@@ -1,9 +1,10 @@
-CXXFLAGS 	+= -std=c++17 -fconcepts -Wall -Wextra -Wpedantic -Iinclude
+CXXFLAGS += -std=c++17 -fconcepts -Wall -Wextra -Wpedantic -Weffc++ -Wc++14-compat -Iinclude
 
 vpath %.hpp include/
 
 default: test clean
 
+test: CXXFLAGS += -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -Wsuggest-attribute=pure -Wsuggest-attribute=const -Wsuggest-attribute=noreturn -Wunused-macros -Wno-endif-labels -Wundef -Wconversion -Wdangling-else	
 test: test_binary
 	./$<
 
